@@ -1,0 +1,82 @@
+Extrator-Opendap: Descrição dos elementos presentes no diagramas de classes
+	ExtratorDeVariaveisIF
+		Interface padrão de acesso a um extrator de variáveis.
+	ExtratorDeVariaveisInterpolado
+		Extrator de variáveis para pontos que não estão fielmente representados no DataSet. Como entrada esse Extrator recebe um conjunto de Pontos, oriundo de um arquivo de acordo com o seguinte formato:
+
+			#<longitude> <latitude> <Nome-Do-Posto> 
+			-36.96306 -7.50694 Bananeiras-faz
+			-36.31806 -7.75167 Barra_Sao_Miguel
+			-36.23333 -7.26667 Boa_Vista
+			-36.11667 -7.48333 Boqueirao
+			-36.28694 -7.49222 Cabaceiras
+			-36.82556 -7.89000 Camalau
+			-36.49028 -7.72528 Caraubas
+
+		Para cada coordenada é realizada uma interpolação para aproximar o valor de interesse através de uma ponderação de seus pontos vizinhos, fielmente representados no dataset.
+	ExtratorDeVariaveisPontosDeGrade
+		Extrator de variáveis para pontos que estão fielmente representados no DataSet. Como entrada esse Extrator recebe duas coordenadas, que representam os o limite inferior esquerdo e o limite superior direito de um retângulo, para o qual serão extraídos todos os pontos presentes dentro da área representada pelo retângulo.
+	ui:
+		O pacote ui é destinado às interfaces de usuário que utilizem o extrator.
+		CLI
+			É o ponto de entrada para a aplicação. Contém o método main da Interface em Linha de Comando.
+			Os argumentos permitidos são os seguintes:
+
+				usage: java -jar extrator-opendap.jar [-d <arg>] [-f <arg>] [-help] [-i <arg>] [-o <arg>] [-p <arg>] [-usage]
+					 -d,--dataset <arg>   Caminho para o dataset de origem.
+					 -f,--fim <arg>       Data final da extração.
+					 -help                Comando de ajuda.
+					 -i,--inicio <arg>    Data inicial da extração.
+					 -o,--output <arg>    Nome do arquivo de saída.
+					 -p,--pontos <arg>    Caminho para o arquivo de pontos.
+					 -usage               Instruções de uso.
+
+			Um exemplo de chamada ao programa é:
+			
+			java -jar extrator-opendap.jar -d "dods://150.165.126.97:8080/thredds/dodsC/test/MIMR_SRB1_1_pr-change_2011-2030.nc" -p postoBoqueirao.txt -i "2020-05-16" -f "2020-08-16" -o output.txt
+	model:
+		O pacote models contém todas as entidades responsáveis pela representação de um Dataset e de um Ponto Coordenado, também chamado de Posto.
+		Dataset
+			A classe DataSet é responsável por encapsular a complexidade de lidar com os arquivos no formato NetCDF ou com o protocolo OPeNDAP, provendo uma interface pública que representa a essência dos datasets disponibilizados pelo IPCC, conforme pode ser visto em atributos como nomeModeloOrigem e nomeCenarioOrigem. Embora possua esses atributos específicos de datasets do IPCC, essa classe pode ser utilizada para representar qualquer dataset que obedeça a convenção CF-1.0 ou sua predecessora, a convenção COARDS. Caso o dataset não obedeça uma dessas convenções não se pode garantir a extração, embora essa ainda possa ocorrer.
+		Posto: 
+			Representação uma localidade na superfície terrestre. Essencialmente, esta entidade é composta de um nome, que define o Posto de observação e de suas Coordenadas Espacial e Temporal.
+		Coordenadas:
+			 Representa as coordenadas espaciais (latitude e longitude) e temporais (data) que permitem localizar um ponto na superfície da terra no tempo.
+		Extração:
+			Classe que encapsula o resultado de uma extração de um dataset. Basicamente, uma extração é formada pelas informações espaciais e temporal e por um valor, extraído do  dataset de acordo com as coordenadas espaciais e temporais indicadas. Um elemento importante desta classe é a associação com FatorDeConversao, que permite convertido o resultado extraído para uma unidade mais familiar para o usuário.
+		Fator de Conversão:
+			Um fator de conversão é um valor que, multiplicado por um valor original permite a conversão para uma outra unidade.Por exemplo, se os valores no dataset forem referentes à precipitação e estiverem na unidade kg m-2 s-1, padrão do SI, e se o objetivo for extraílas em mm, o fator de conversão será 86400. Este fator multiplicará o valor original e o resultado estará em milímetros, muito utilizado na prática. Além do fator multiplicativo, essa classe também  permite recuperar a unidade referente à conversão.
+	formatador:
+		Este pacote é destinado aos diferentes tipos de formatações de saída para as extrações que o usuário desejar. Atualmente o formato textual utilizado, implementado na classe FormatadorPMHLike é algo como:
+
+		#   <longitude>		<latitude>	  <data>	  <valor>	
+		    -36.9631             -7.5069        2055-01-16         -3.2 
+		    -36.9631             -7.5069        2055-02-16          0.0 
+		    -36.9631             -7.5069        2055-03-16          0.8 
+		    -36.9631             -7.5069        2055-04-16          1.6 
+		    -36.9631             -7.5069        2055-05-16          1.1 
+		    -36.9631             -7.5069        2055-06-16          0.2 
+		    -36.9631             -7.5069        2055-07-16          0.2 
+		    -36.9631             -7.5069        2055-08-16          0.0 
+		    -36.9631             -7.5069        2055-09-16          0.1 
+		    -36.9631             -7.5069        2055-10-16          0.0 
+		    -36.9631             -7.5069        2055-11-16          0.0 
+		    -36.9631             -7.5069        2055-12-16          0.0 
+
+		Caso deseje-se um formato de saída diferente deve-se implementar a interface FormatadorIF e definir o seu método público Formatador#adicionaExtracao(Extracao extracao), que é utilizado para formatar cada extração realizada. Após a implementação do novo formatador, basta informá-lo ao ExtratorDeVariáveis através do método ExtratorDeVariaveisIF#setFormatador(FormatadorIF formatador).
+	interpolador:
+		InterpoladorIF
+			Interface que define um Interpolador, a ser utilizado para estimar um valor ausente em um grid por intermédio de seus valores adjacentes.
+		InterpoladorBilinearOPeNDAP
+			Interpolador Bilinear específico para datasets acessíveis via protocolo OpenDap. O dataset sendo acessado deve obedecer à convenção CF-1.0 ou COARDS.
+		InterpoladorBilinearNetCDF
+			Interpolador Bilinear específico para os dados do Tipo NetCDF acessados por um arquivo local. O dataset sendo acessado deve obedecer à convenção CF-1.0 ou COARDS.
+	util:
+		NetcdfAPIUtil
+			Contém métodos utilitários para acesso à API netcdf utilizada na aplicação. Os métodos desta classe realizam efetivamente a leitura de dados presentas no dataset.
+		Constantes
+			Concentra as constantes utilizadas pelo extrator.
+		LocaleUtil
+			Concentra as infomações referentes ao Locale utilizado pelo extrator. Para alterar o formato de data ou  de números decimais (se separados por vírgula ou ponto), deve-se alterar os formatos presentes nessa interface.
+
+

@@ -1,0 +1,12 @@
+-36.05917 -7.07778 Pocinhos
+-37.08417 -7.69500 Prata
+-36.84528 -7.10222 Salgadinho
+-36.52860 -7.38250 Sao_Joao_Cariri-UFPB
+-36.84722 -8.08000 Sao_Joao_Tigre
+-36.80583 -7.39083 Sao_Jose_Cordeiros
+-36.66000 -7.48194 Serra_Branca
+-36.36194 -7.06083 Soledade-pvg
+-37.00972 -8.15167 Sao_Sebastiao_Umbuzeiro
+-36.68333 -8.03333 Santa_Maria
+-36.93333 -7.65000 Sume
+-36.82806 -7.21639 Taperoa-pvg

@@ -1,0 +1,5 @@
+-6.85 -35.37 Areia_Branca_RN
+-6.52 -35.73 Campina_PB
+-6.97 -35.7 Joao_Pessoa_PB
+-6.77 -35.63 Recife_PE
+
