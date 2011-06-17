@@ -19,71 +19,98 @@ import br.edu.ufcg.lsd.seghidro.extratoropendap.util.NetcdfAPIUtil;
 
 /**
  * 
- * Interpolador Bilinear específico para os dados do Tipo NetCDF acessados por um arquivo local.
+ * Interpolador Bilinear específico para os dados do Tipo NetCDF acessados por
+ * um arquivo local.
  * 
  * @author edigley
- *
+ * 
  */
 public class InterpoladorBilinearNetCDF implements InterpoladorIF {
 
-	/* (non-Javadoc)
-	 * @see br.edu.ufcg.lsd.seghidro.mudancasClimaticas.extrator.interpolador.InterpoladorIF#interpola(br.edu.ufcg.lsd.seghidro.mudancasClimaticas.extrator.DataSet, br.edu.ufcg.lsd.seghidro.mudancasClimaticas.extrator.Coordenadas)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.edu.ufcg.lsd.seghidro.mudancasClimaticas.extrator.interpolador.
+	 * InterpoladorIF
+	 * #interpola(br.edu.ufcg.lsd.seghidro.mudancasClimaticas.extrator.DataSet,
+	 * br.edu.ufcg.lsd.seghidro.mudancasClimaticas.extrator.Coordenadas)
 	 */
-	public Double interpola(DataSet dataSet, String variavel, Coordenadas coordenadas) throws ExtratorOpendapException {
-		//TODO Verificar qual o comportamento para o caso em que o valor esteja fielmente representado no arquivo netCDF.
+	public Double interpola(DataSet dataSet, String variavel,
+			Coordenadas coordenadas) throws ExtratorOpendapException {
+		// TODO Verificar qual o comportamento para o caso em que o valor esteja
+		// fielmente representado no arquivo netCDF.
 		try {
 			int time = dataSet.getIndexFromTime(coordenadas.getTime());
-			
+
 			if (time == -1) {
-				throw new ExtratorOpendapException("DataSet de origem não possui dados para a data especificada.");
+				throw new ExtratorOpendapException(
+						"DataSet de origem não possui dados para a data especificada.");
 			}
-			
+
 			GridDataset gridDS = dataSet.getGridDs();
 			GeoGrid grid = dataSet.getFirstGrid();
 			VariableEnhanced variable = grid.getVariable();
 			GridCoordSystem coordinateSystem = grid.getCoordinateSystem();
 			CoordinateAxis longitudeVariable = coordinateSystem.getXHorizAxis();
 			CoordinateAxis latitudeVariable = coordinateSystem.getYHorizAxis();
-			Variable longitudeBoundsVariable = gridDS.getNetcdfDataset().findVariable(longitudeVariable.getName() + "_bounds");
-			Variable latitudeBoundsVariable = gridDS.getNetcdfDataset().findVariable(latitudeVariable.getName() + "_bounds");
-			
+			Variable longitudeBoundsVariable = gridDS.getNetcdfDataset()
+					.findVariable(longitudeVariable.getName() + "_bounds");
+			Variable latitudeBoundsVariable = gridDS.getNetcdfDataset()
+					.findVariable(latitudeVariable.getName() + "_bounds");
+
 			if (latitudeBoundsVariable == null) {
-				throw new ExtratorOpendapException("Arquivo de origem não possui a variável "+longitudeVariable.getName() + "_bounds"+" necessária para a interpolação.");
+				throw new ExtratorOpendapException(
+						"Arquivo de origem não possui a variável "
+								+ longitudeVariable.getName() + "_bounds"
+								+ " necessária para a interpolação.");
 			}
-			
+
 			if (longitudeBoundsVariable == null) {
-				throw new ExtratorOpendapException("Arquivo de origem não possui a variável "+latitudeVariable.getName() + "_bounds"+" necessária para a interpolação.");
+				throw new ExtratorOpendapException(
+						"Arquivo de origem não possui a variável "
+								+ latitudeVariable.getName() + "_bounds"
+								+ " necessária para a interpolação.");
 			}
-						
-			int[] xy = coordinateSystem.findXYindexFromCoord(coordenadas.getLongitude(), coordenadas.getLatitude(), null);
+
+			int[] xy = coordinateSystem
+					.findXYindexFromCoord(coordenadas.getLongitude(),
+							coordenadas.getLatitude(), null);
 			int longitude = xy[0];
 			int latitude = xy[1];
 
 			int x1 = longitude;
 			int y1 = latitude;
-			Array long_bounds = longitudeBoundsVariable.read(new int[] { x1, 0 }, new int[] { 1, 2 });
+			Array long_bounds = longitudeBoundsVariable.read(
+					new int[] { x1, 0 }, new int[] { 1, 2 });
 			IndexIterator longBoundsIt = long_bounds.getIndexIterator();
 			double long_l1 = (Float) longBoundsIt.next();
 			double long_l2 = (Float) longBoundsIt.next();
 			double long_l = long_l2 - long_l1;
 
-			Array lat_bounds = latitudeBoundsVariable.read(new int[] { y1, 0 }, new int[] { 1, 2 });
+			Array lat_bounds = latitudeBoundsVariable.read(new int[] { y1, 0 },
+					new int[] { 1, 2 });
 			IndexIterator latBoundsIt = lat_bounds.getIndexIterator();
 			double lat_l1 = (Float) latBoundsIt.next();
 			double lat_l2 = (Float) latBoundsIt.next();
 			double lat_l = lat_l2 - lat_l1;
 
-			double p1x = LatLonPointImpl.lonNormal(NetcdfAPIUtil.readSingleValueAsFloat(longitudeVariable, new int[] { x1 }));
-			double p1y = NetcdfAPIUtil.readSingleValueAsFloat(latitudeVariable, new int[] { y1 });
+			double p1x = LatLonPointImpl
+					.lonNormal(NetcdfAPIUtil.readSingleValueAsFloat(
+							longitudeVariable, new int[] { x1 }));
+			double p1y = NetcdfAPIUtil.readSingleValueAsFloat(latitudeVariable,
+					new int[] { y1 });
 
 			if ((coordenadas.getLongitude() - p1x) < 0) {
 				x1 = x1 - 1;
-				p1x = LatLonPointImpl.lonNormal(NetcdfAPIUtil.readSingleValueAsFloat(longitudeVariable, new int[] { x1 }));
+				p1x = LatLonPointImpl.lonNormal(NetcdfAPIUtil
+						.readSingleValueAsFloat(longitudeVariable,
+								new int[] { x1 }));
 			}
 
 			if ((coordenadas.getLatitude() - p1y) < 0) {
 				y1 = y1 - 1;
-				p1y = NetcdfAPIUtil.readSingleValueAsFloat(latitudeVariable, new int[] { y1 });
+				p1y = NetcdfAPIUtil.readSingleValueAsFloat(latitudeVariable,
+						new int[] { y1 });
 			}
 
 			int x2 = x1 + 1;
@@ -96,12 +123,17 @@ public class InterpoladorBilinearNetCDF implements InterpoladorIF {
 			double yw2 = 1d - yw1;
 
 			int[] unicoElemento = new int[] { 1, 1, 1 };
-			double f11 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, y1, x1 }, unicoElemento);
-			double f12 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, y2, x1 }, unicoElemento);
-			double f21 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, y1, x2 }, unicoElemento);
-			double f22 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, y2, x2 }, unicoElemento);
+			double f11 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time,
+					y1, x1 }, unicoElemento);
+			double f12 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time,
+					y2, x1 }, unicoElemento);
+			double f21 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time,
+					y1, x2 }, unicoElemento);
+			double f22 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time,
+					y2, x2 }, unicoElemento);
 
-			return f11 * xw2 * yw2 + f21 * xw1 * yw2 + f12 * xw2 * yw1 + f22 * xw1 * yw1;
+			return f11 * xw2 * yw2 + f21 * xw1 * yw2 + f12 * xw2 * yw1 + f22
+					* xw1 * yw1;
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -111,5 +143,4 @@ public class InterpoladorBilinearNetCDF implements InterpoladorIF {
 		return null;
 	}
 
-	
 }

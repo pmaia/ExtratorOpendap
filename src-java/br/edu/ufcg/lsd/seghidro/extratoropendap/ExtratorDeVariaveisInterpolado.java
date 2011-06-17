@@ -25,16 +25,19 @@ import br.edu.ufcg.lsd.seghidro.extratoropendap.model.Posto;
 
 /**
  * 
- * A classe {@link ExtratorDeVariaveisInterpolado} é o elemento ativo deste módulo, responsável por coordenar a 
- * extração de valores de interesse presentes em um {@link DataSet} referentes a um conjunto de {@link Posto} 
- * que lhe é passado como parâmetro no momento de sua criação através de um arquivo de Postos. 
- * Como resultado de sua execução, um objeto da clase {@link ExtratorDeVariaveisInterpolado} gera uma seqüência de {@link Extracao}, 
- * que podem ser recuperadas em forma de objetos ({@link ExtratorDeVariaveisInterpolado#getListaDeExtracoes()}) ou em em formato String já 
- * ({@link ExtratorDeVariaveisInterpolado#getExtracoes()}).
+ * A classe {@link ExtratorDeVariaveisInterpolado} é o elemento ativo deste
+ * módulo, responsável por coordenar a extração de valores de interesse
+ * presentes em um {@link DataSet} referentes a um conjunto de {@link Posto} que
+ * lhe é passado como parâmetro no momento de sua criação através de um arquivo
+ * de Postos. Como resultado de sua execução, um objeto da clase
+ * {@link ExtratorDeVariaveisInterpolado} gera uma seqüência de {@link Extracao}
+ * , que podem ser recuperadas em forma de objetos (
+ * {@link ExtratorDeVariaveisInterpolado#getListaDeExtracoes()}) ou em em
+ * formato String já ({@link ExtratorDeVariaveisInterpolado#getExtracoes()}).
  * 
  * @author Edigley P. Fraga, edigley@lsd.ufcg.edu.br
  * @since 12/02/2009
- *
+ * 
  */
 public class ExtratorDeVariaveisInterpolado extends ExtratorDeVariaveisAbstract {
 
@@ -85,15 +88,23 @@ public class ExtratorDeVariaveisInterpolado extends ExtratorDeVariaveisAbstract 
 	}
 
 	/**
-	 * Extrator de valores a partir de dados grid, acessíveis pelo formato NetCDF.
-	 * <pres> latitude longitude NomeDoPosto
+	 * Extrator de valores a partir de dados grid, acessíveis pelo formato
+	 * NetCDF. <pres> latitude longitude NomeDoPosto </pre> Como no exemplo:
+	 * 
+	 * <pre>
+	 * -36.96306 -7.50694 Bananeiras-faz
 	 * </pre>
-	 * Como no exemplo:
-	 * <pre>-36.96306 -7.50694 Bananeiras-faz</pre>
-	 * @param arquivoDePontos Informações de latitude e longitude para extração dos valores. O arquivo deve obedecer ao padrão:
-	 * @param arquivoDeExtracoes O nome do arquivo em que os resultados serão salvos.
-	 * @param dataSet O arquivo de origem dos dados, no formato netcdf.
-	 * @throws ExtratorOpendapException Caso haja algum problema na leitura dos arquivos informados ou no parser de algum dos valores.
+	 * 
+	 * @param arquivoDePontos
+	 *            Informações de latitude e longitude para extração dos valores.
+	 *            O arquivo deve obedecer ao padrão:
+	 * @param arquivoDeExtracoes
+	 *            O nome do arquivo em que os resultados serão salvos.
+	 * @param dataSet
+	 *            O arquivo de origem dos dados, no formato netcdf.
+	 * @throws ExtratorOpendapException
+	 *             Caso haja algum problema na leitura dos arquivos informados
+	 *             ou no parser de algum dos valores.
 	 */
 	public ExtratorDeVariaveisInterpolado(DataSet dataSet,
 			File arquivoDePontos, Date dataInicial, Date dataFinal,
@@ -105,18 +116,30 @@ public class ExtratorDeVariaveisInterpolado extends ExtratorDeVariaveisAbstract 
 	}
 
 	/**
-	 * Extrator de valores a partir de dados grid, acessíveis pelo formato NetCDF.
-	 * @param arquivoDePontos Informações de latitude e longitude para extração dos valores. O arquivo deve obedecer ao padrão:
-	 * <pres> latitude longitude NomeDoPosto
+	 * Extrator de valores a partir de dados grid, acessíveis pelo formato
+	 * NetCDF.
+	 * 
+	 * @param arquivoDePontos
+	 *            Informações de latitude e longitude para extração dos valores.
+	 *            O arquivo deve obedecer ao padrão: <pres> latitude longitude
+	 *            NomeDoPosto </pre> Como no exemplo:
+	 * 
+	 *            <pre>
+	 * -36.96306 -7.50694 Bananeiras-faz
 	 * </pre>
-	 * Como no exemplo:
-	 * <pre>-36.96306 -7.50694 Bananeiras-faz</pre>
-	 * @param variavelDeInteresse O nome da variável que se deseja extrair os valores.
-	 * @param dataInicial A data inicial para extraçaoo dos valores.
-	 * @param dataFinal A data final para extraçaoo dos valores.
-	 * @param arquivoDeExtracoes O nome do arquivo em que os resultados serão salvos.
-	 * @param dataSet O arquivo de origem dos dados, no formato netcdf.
-	 * @throws ExtratorOpendapException Caso haja algum problema na leitura dos arquivos informados ou no parser de algum dos valores.
+	 * @param variavelDeInteresse
+	 *            O nome da variável que se deseja extrair os valores.
+	 * @param dataInicial
+	 *            A data inicial para extraçaoo dos valores.
+	 * @param dataFinal
+	 *            A data final para extraçaoo dos valores.
+	 * @param arquivoDeExtracoes
+	 *            O nome do arquivo em que os resultados serão salvos.
+	 * @param dataSet
+	 *            O arquivo de origem dos dados, no formato netcdf.
+	 * @throws ExtratorOpendapException
+	 *             Caso haja algum problema na leitura dos arquivos informados
+	 *             ou no parser de algum dos valores.
 	 */
 	public ExtratorDeVariaveisInterpolado(DataSet dataSet,
 			File arquivoDePontos, Date dataInicial, Date dataFinal,
@@ -156,15 +179,23 @@ public class ExtratorDeVariaveisInterpolado extends ExtratorDeVariaveisAbstract 
 	}
 
 	/**
-	 * Extrator de valores a partir de dados grid, acessíveis pelo formato NetCDF.
-	 * <pres> latitude longitude NomeDoPosto
+	 * Extrator de valores a partir de dados grid, acessíveis pelo formato
+	 * NetCDF. <pres> latitude longitude NomeDoPosto </pre> Como no exemplo:
+	 * 
+	 * <pre>
+	 * -36.96306 -7.50694 Bananeiras-faz
 	 * </pre>
-	 * Como no exemplo:
-	 * <pre>-36.96306 -7.50694 Bananeiras-faz</pre>
-	 * @param dataSet O arquivo de origem dos dados, no formato netcdf.
-	 * @param arquivoDePontos Informações de latitude e longitude para extração dos valores. O arquivo deve obedecer ao padrão:
-	 * @param arquivoDeExtracoes O nome do arquivo em que os resultados serão salvos.
-	 * @throws ExtratorOpendapException Caso haja algum problema na leitura dos arquivos informados ou no parser de algum dos valores.
+	 * 
+	 * @param dataSet
+	 *            O arquivo de origem dos dados, no formato netcdf.
+	 * @param arquivoDePontos
+	 *            Informações de latitude e longitude para extração dos valores.
+	 *            O arquivo deve obedecer ao padrão:
+	 * @param arquivoDeExtracoes
+	 *            O nome do arquivo em que os resultados serão salvos.
+	 * @throws ExtratorOpendapException
+	 *             Caso haja algum problema na leitura dos arquivos informados
+	 *             ou no parser de algum dos valores.
 	 */
 	public ExtratorDeVariaveisInterpolado(DataSet dataSet,
 			File arquivoDePontos, File arquivoDeExtracoes)
@@ -174,16 +205,25 @@ public class ExtratorDeVariaveisInterpolado extends ExtratorDeVariaveisAbstract 
 	}
 
 	/**
-	 * Extrator de valores a partir de dados grid, acessíveis pelo formato NetCDF.
-	 * <pres> latitude longitude NomeDoPosto
+	 * Extrator de valores a partir de dados grid, acessíveis pelo formato
+	 * NetCDF. <pres> latitude longitude NomeDoPosto </pre> Como no exemplo:
+	 * 
+	 * <pre>
+	 * -36.96306 -7.50694 Bananeiras-faz
 	 * </pre>
-	 * Como no exemplo:
-	 * <pre>-36.96306 -7.50694 Bananeiras-faz</pre>
-	 * @param variavelDeInteresse O nome da variável que se deseja extrair os valores.
-	 * @param dataSet O arquivo de origem dos dados, no formato netcdf.
-	 * @param arquivoDePontos Informações de latitude e longitude para extração dos valores. O arquivo deve obedecer ao padrão:
-	 * @param arquivoDeExtracoes O nome do arquivo em que os resultados serão salvos.
-	 * @throws ExtratorOpendapException Caso haja algum problema na leitura dos arquivos informados ou no parser de algum dos valores.
+	 * 
+	 * @param variavelDeInteresse
+	 *            O nome da variável que se deseja extrair os valores.
+	 * @param dataSet
+	 *            O arquivo de origem dos dados, no formato netcdf.
+	 * @param arquivoDePontos
+	 *            Informações de latitude e longitude para extração dos valores.
+	 *            O arquivo deve obedecer ao padrão:
+	 * @param arquivoDeExtracoes
+	 *            O nome do arquivo em que os resultados serão salvos.
+	 * @throws ExtratorOpendapException
+	 *             Caso haja algum problema na leitura dos arquivos informados
+	 *             ou no parser de algum dos valores.
 	 */
 	public ExtratorDeVariaveisInterpolado(DataSet dataSet,
 			File arquivoDePontos, String variavelDeInteresse,
@@ -212,16 +252,16 @@ public class ExtratorDeVariaveisInterpolado extends ExtratorDeVariaveisAbstract 
 
 	@Override
 	public String extraiValoresDeInteresse() throws ExtratorOpendapException {
-		logger
-				.debug("Vai extrair os valores a partir de um conjunto de pontos.");
+		logger.debug("Vai extrair os valores a partir de um conjunto de pontos.");
 		Scanner sc = (scPontos != null) ? scPontos
 				: new Scanner(streamDePontos);
 		while (sc.hasNextLine()) {
 			Scanner sc2 = new Scanner(sc.nextLine());
-			//TODO verificar o caso para o qual o arquivo de pontos não está devidamente definido.
+			// TODO verificar o caso para o qual o arquivo de pontos não está
+			// devidamente definido.
 			double longitude = new Double(sc2.next());
 			double latitude = new Double(sc2.next());
-			//	    String nomePosto = sc2.next();
+			// String nomePosto = sc2.next();
 			Coordenadas coordenadas = new Coordenadas(latitude, longitude);
 			logger.debug("Vai realizar a extração para a coordenada: "
 					+ coordenadas);
@@ -231,11 +271,17 @@ public class ExtratorDeVariaveisInterpolado extends ExtratorDeVariaveisAbstract 
 	}
 
 	/**
-	 * Realiza a extração dos valores da variável de interesse com base na latitude e longitude, 
-	 * realizando uma interpolação caso as coordenadas representadas não estejam exatamente localizadas 
-	 * no arquivo grid informado na construção deste extrator.
-	 * @param longitude A longitude da localidade para a qual serão extraídos os valores para a variável de interesse.
-	 * @param latitude A latitude da localidade para a qual serão extraídos os valores para a variável de interesse.
+	 * Realiza a extração dos valores da variável de interesse com base na
+	 * latitude e longitude, realizando uma interpolação caso as coordenadas
+	 * representadas não estejam exatamente localizadas no arquivo grid
+	 * informado na construção deste extrator.
+	 * 
+	 * @param longitude
+	 *            A longitude da localidade para a qual serão extraídos os
+	 *            valores para a variável de interesse.
+	 * @param latitude
+	 *            A latitude da localidade para a qual serão extraídos os
+	 *            valores para a variável de interesse.
 	 */
 	private void extraiValoresDeInteresse(Coordenadas coordenadas) {
 		logger.debug("Vai pegar os dados para cada data.");

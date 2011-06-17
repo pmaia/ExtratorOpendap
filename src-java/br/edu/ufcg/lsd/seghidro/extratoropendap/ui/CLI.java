@@ -87,100 +87,103 @@ public class CLI {
 	 * </pre>
 	 * 
 	 * @param args
-	 * @throws java.text.ParseException 
-	 * @throws ExtratorOpendapException 
-	 * @throws IOException 
+	 * @throws java.text.ParseException
+	 * @throws ExtratorOpendapException
+	 * @throws IOException
 	 */
-public static void main(String[] args) throws IOException, ExtratorOpendapException, java.text.ParseException {
-//		System.out.println(args[0]+" "+ args[1] +" "+ args[2]+" "+ args[3] +" "+ args[4]);
-//		System.out.println("===========================hsdklhfsllll+======");
-//		if (args[3].equals("forMarbs")) {
-//			ExtratorNoFormatoPMH extrator = new ExtratorNoFormatoPMH(args[4],args[5],args[6]);
+	public static void main(String[] args) throws IOException,
+			ExtratorOpendapException, java.text.ParseException {
+		// System.out.println(args[0]+" "+ args[1] +" "+ args[2]+" "+ args[3]
+		// +" "+ args[4]);
+		// System.out.println("===========================hsdklhfsllll+======");
+		// if (args[3].equals("forMarbs")) {
+		// ExtratorNoFormatoPMH extrator = new
+		// ExtratorNoFormatoPMH(args[4],args[5],args[6]);
 		if (args[0].equals("forMarbs")) {
-			ExtratorNoFormatoPMH extrator = new ExtratorNoFormatoPMH(args[1],args[2],args[3]);
+			ExtratorNoFormatoPMH extrator = new ExtratorNoFormatoPMH(args[1],
+					args[2], args[3]);
 		} else {
-		Options options = new Options();
+			Options options = new Options();
 
-		options.addOption(PONTOS, "pontos", true,
-				"Caminho para o arquivo de pontos.");
-		options.addOption(DATASET, "dataset", true,
-				"Caminho para o dataset de origem.");
-		options.addOption(OUTPUT, "output", true, "Nome do arquivo de saída.");
-		options.addOption(INICIO, "inicio", true, "Data inicial da extração.");
-		options.addOption(FIM, "fim", true, "Data final da extração.");
-		options.addOption(HELP, false, "Comando de ajuda.");
-		options.addOption(USAGE, false, "Instruções de uso.");
-		CommandLineParser parser = new PosixParser();
-		HelpFormatter formatter = new HelpFormatter();
-		CommandLine cmd = null;
+			options.addOption(PONTOS, "pontos", true,
+					"Caminho para o arquivo de pontos.");
+			options.addOption(DATASET, "dataset", true,
+					"Caminho para o dataset de origem.");
+			options.addOption(OUTPUT, "output", true,
+					"Nome do arquivo de saída.");
+			options.addOption(INICIO, "inicio", true,
+					"Data inicial da extração.");
+			options.addOption(FIM, "fim", true, "Data final da extração.");
+			options.addOption(HELP, false, "Comando de ajuda.");
+			options.addOption(USAGE, false, "Instruções de uso.");
+			CommandLineParser parser = new PosixParser();
+			HelpFormatter formatter = new HelpFormatter();
+			CommandLine cmd = null;
 
-		try {
-			cmd = parser.parse(options, args);
-		} catch (ParseException e) {
-			MainUtil.showMessageAndExit(e);
-		}
-
-		if (cmd.hasOption(PONTOS) && cmd.hasOption(DATASET)
-				&& cmd.hasOption(OUTPUT)) {
-			String arquivoNetCDF = cmd.getOptionValue(DATASET);
-			String arquivoDePontos = cmd.getOptionValue(PONTOS);
-			String outputFileName = cmd.getOptionValue(OUTPUT);
-			DataSet dataset;
 			try {
-				dataset = new DataSet(arquivoNetCDF);
-				ExtratorDeVariaveisIF extrator;
-				if (cmd.hasOption(INICIO) && cmd.hasOption(FIM)) {
-					Date dataInicial = null;
-					Date dataFinal = null;
-					try {
-						dataInicial = formatadorDeDatas.parse(cmd
-								.getOptionValue(INICIO));
-					} catch (java.text.ParseException e) {
-						MainUtil
-								.showMessageAndExit("A data inicial '"
-										+ cmd.getOptionValue(INICIO)
-										+ "' não está em um formato reconhecido. Informe no formato "
-										+ formatoParaData + ". Por Exemplo: "
-										+ formatadorDeDatas.format(new Date())
-										+ ".");
-					}
-					try {
-						dataFinal = formatadorDeDatas.parse(cmd
-								.getOptionValue(FIM));
-					} catch (java.text.ParseException e) {
-						MainUtil
-								.showMessageAndExit("A data final '"
-										+ cmd.getOptionValue(FIM)
-										+ "' não está em um formato reconhecido. Informe no formato "
-										+ formatoParaData + ". Por Exemplo: "
-										+ formatadorDeDatas.format(new Date())
-										+ ".");
-					}
-					extrator = new ExtratorDeVariaveisInterpolado(dataset,
-							new File(arquivoDePontos), dataInicial, dataFinal,
-							new File(outputFileName));
-				} else {
-					extrator = new ExtratorDeVariaveisInterpolado(dataset,
-							new File(arquivoDePontos), new File(outputFileName));
-				}
-				String extracoes = extrator.extraiValoresDeInteresse();
-				System.out.println(extracoes);
-				extrator.salvaArquivoComExtracoes();
-			} catch (ExtratorOpendapException e) {
+				cmd = parser.parse(options, args);
+			} catch (ParseException e) {
 				MainUtil.showMessageAndExit(e);
 			}
-		} else {
-			if (cmd.hasOption(HELP)) {
-				formatter.printHelp(EXECUTION_LINE, options);
-			} else if (cmd.hasOption(USAGE)) {
-				formatter.printHelp(EXECUTION_LINE, options, true);
-			} else {
-				formatter.printHelp(EXECUTION_LINE, options, true);
-			}
-		}
 
+			if (cmd.hasOption(PONTOS) && cmd.hasOption(DATASET)
+					&& cmd.hasOption(OUTPUT)) {
+				String arquivoNetCDF = cmd.getOptionValue(DATASET);
+				String arquivoDePontos = cmd.getOptionValue(PONTOS);
+				String outputFileName = cmd.getOptionValue(OUTPUT);
+				DataSet dataset;
+				try {
+					dataset = new DataSet(arquivoNetCDF);
+					ExtratorDeVariaveisIF extrator;
+					if (cmd.hasOption(INICIO) && cmd.hasOption(FIM)) {
+						Date dataInicial = null;
+						Date dataFinal = null;
+						try {
+							dataInicial = formatadorDeDatas.parse(cmd
+									.getOptionValue(INICIO));
+						} catch (java.text.ParseException e) {
+							MainUtil.showMessageAndExit("A data inicial '"
+									+ cmd.getOptionValue(INICIO)
+									+ "' não está em um formato reconhecido. Informe no formato "
+									+ formatoParaData + ". Por Exemplo: "
+									+ formatadorDeDatas.format(new Date())
+									+ ".");
+						}
+						try {
+							dataFinal = formatadorDeDatas.parse(cmd
+									.getOptionValue(FIM));
+						} catch (java.text.ParseException e) {
+							MainUtil.showMessageAndExit("A data final '"
+									+ cmd.getOptionValue(FIM)
+									+ "' não está em um formato reconhecido. Informe no formato "
+									+ formatoParaData + ". Por Exemplo: "
+									+ formatadorDeDatas.format(new Date())
+									+ ".");
+						}
+						extrator = new ExtratorDeVariaveisInterpolado(dataset,
+								new File(arquivoDePontos), dataInicial,
+								dataFinal, new File(outputFileName));
+					} else {
+						extrator = new ExtratorDeVariaveisInterpolado(dataset,
+								new File(arquivoDePontos), new File(
+										outputFileName));
+					}
+					String extracoes = extrator.extraiValoresDeInteresse();
+					System.out.println(extracoes);
+					extrator.salvaArquivoComExtracoes();
+				} catch (ExtratorOpendapException e) {
+					MainUtil.showMessageAndExit(e);
+				}
+			} else {
+				if (cmd.hasOption(HELP)) {
+					formatter.printHelp(EXECUTION_LINE, options);
+				} else if (cmd.hasOption(USAGE)) {
+					formatter.printHelp(EXECUTION_LINE, options, true);
+				} else {
+					formatter.printHelp(EXECUTION_LINE, options, true);
+				}
+			}
+
+		}
 	}
 }
-}
-
-

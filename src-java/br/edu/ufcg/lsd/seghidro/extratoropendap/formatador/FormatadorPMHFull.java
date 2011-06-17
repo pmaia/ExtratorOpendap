@@ -37,10 +37,10 @@ public class FormatadorPMHFull implements FormatadorIF {
 	private static Logger logger = Logger.getLogger(FormatadorIF.class);
 
 	private Formatter formatter;
-	
+
 	@Override
 	public void adicionaExtracao(Coordenadas coordenadas, double valor) {
-		
+
 		String dataFormatada = formatadorDeDatas.format(coordenadas.getTime());
 		formatter.format("%19.4f %19.4f       %S %18.12f" + FIM_DE_LINHA,
 				coordenadas.getLongitude(), coordenadas.getLatitude(),
@@ -49,16 +49,16 @@ public class FormatadorPMHFull implements FormatadorIF {
 
 	@Override
 	public void adicionaExtracao(Extracao extracao) {
-		
+
 		logger.debug("Adicionando a extração: " + extracao);
-		adicionaExtracao(extracao.getCoordenadas(), extracao
-				.getValorConvertido());
+		adicionaExtracao(extracao.getCoordenadas(),
+				extracao.getValorConvertido());
 	}
 
 	@Override
 	public void setStringBuffer(StringBuffer sb) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

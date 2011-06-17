@@ -3,7 +3,6 @@ package br.edu.ufcg.lsd.seghidro.extratoropendap;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 /**
  * Classe que monta o arquivo JDF
  * 

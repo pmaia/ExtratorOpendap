@@ -10,7 +10,7 @@ import java.util.Locale;
  * ponto), deve-se alterar os formatos presentes nessa interface.
  * 
  * @author edigley
- *
+ * 
  */
 public interface LocaleUtil {
 
@@ -18,7 +18,8 @@ public interface LocaleUtil {
 
 	public static final String formatoParaData = "yyyy-MM-dd";
 
-	public static final SimpleDateFormat formatadorDeDatas = new SimpleDateFormat(formatoParaData, brasil);
+	public static final SimpleDateFormat formatadorDeDatas = new SimpleDateFormat(
+			formatoParaData, brasil);
 
 	public static DecimalFormat formatadorDeNumeros = new DecimalFormat();
 

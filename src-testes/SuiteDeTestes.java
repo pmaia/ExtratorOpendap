@@ -13,14 +13,15 @@ import br.edu.ufcg.lsd.seghidro.extratoropendap.model.DataSetTest;
 import br.edu.ufcg.lsd.seghidro.extratoropendap.ui.CLITest;
 
 @RunWith(Suite.class)
-@SuiteClasses( { DataSetTest.class, ExtratorDeVariaveisInterpoladoTest.class, ExtratorDeVariaveisPontosDeGradeTest.class, CLITest.class, })
+@SuiteClasses({ DataSetTest.class, ExtratorDeVariaveisInterpoladoTest.class,
+		ExtratorDeVariaveisPontosDeGradeTest.class, CLITest.class, })
 public class SuiteDeTestes {
 
-    static class Compatibility {
+	static class Compatibility {
 
-	static Test suite() throws IOException {
-	    return new JUnit4TestAdapter(SuiteDeTestes.class);
+		static Test suite() throws IOException {
+			return new JUnit4TestAdapter(SuiteDeTestes.class);
+		}
 	}
-    }
 
 }

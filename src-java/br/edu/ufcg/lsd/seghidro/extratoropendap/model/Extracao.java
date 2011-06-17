@@ -9,8 +9,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * 
- * Bean que representa o resultado de uma extração de um dataset. Basicamente, uma extração é
- * formada pelas informações espaciais e temporal e por um valor.
+ * Bean que representa o resultado de uma extração de um dataset. Basicamente,
+ * uma extração é formada pelas informações espaciais e temporal e por um valor.
  * 
  * @author edigley
  * 
@@ -38,9 +38,9 @@ public class Extracao {
 	 * Construtor para uma extração.
 	 * 
 	 * @param coordenadas
-	 *                A localização espacial da
+	 *            A localização espacial da
 	 * @param valor
-	 *                O valor da Extração.
+	 *            O valor da Extração.
 	 */
 	public Extracao(Coordenadas coordenadas, double valor) {
 		super();
@@ -55,22 +55,22 @@ public class Extracao {
 	 * passadas de forma primitiva.
 	 * 
 	 * @param longitude
-	 *                A longitude da coordenada.
+	 *            A longitude da coordenada.
 	 * @param latitude
-	 *                A latitude da coordenada.
+	 *            A latitude da coordenada.
 	 * @param time
-	 *                A localização temporal da extração.
+	 *            A localização temporal da extração.
 	 * @param valor
-	 *                O valor da extração.
+	 *            O valor da extração.
 	 * @throws ParseException
-	 *                 Caso haja algum problema no time (informado como String)
-	 *                 passado como parâmetro.
+	 *             Caso haja algum problema no time (informado como String)
+	 *             passado como parâmetro.
 	 */
 	public Extracao(double longitude, double latitude, String time, double valor)
 			throws ParseException {
 		this(
-				new Coordenadas(latitude, longitude, formatadorDeDatas
-						.parse(time)), valor);
+				new Coordenadas(latitude, longitude,
+						formatadorDeDatas.parse(time)), valor);
 	}
 
 	/**
@@ -78,15 +78,15 @@ public class Extracao {
 	 * passadas em forma de String.
 	 * 
 	 * @param longitude
-	 *                A longitude da coordenada.
+	 *            A longitude da coordenada.
 	 * @param latitude
-	 *                A latitude da coordenada.
+	 *            A latitude da coordenada.
 	 * @param time
-	 *                A localização temporal da extração.
+	 *            A localização temporal da extração.
 	 * @param valor
-	 *                O valor da extração.
+	 *            O valor da extração.
 	 * @throws ParseException
-	 *                 Caso haja algum problema nos parâmetro.
+	 *             Caso haja algum problema nos parâmetro.
 	 */
 	public Extracao(String longitude, String latitude, String time, String valor)
 			throws NumberFormatException, ParseException {
@@ -111,7 +111,8 @@ public class Extracao {
 	}
 
 	public double getValorConvertido() {
-		//	return fatorDeConversao != null ? valor * fatorDeConversao.getFator() : valor;
+		// return fatorDeConversao != null ? valor * fatorDeConversao.getFator()
+		// : valor;
 		return fatorDeConversao != null ? fatorDeConversao.converte(valor)
 				: valor;
 	}
@@ -133,7 +134,7 @@ public class Extracao {
 	 * extraídos.
 	 * 
 	 * @param fatorDeConversao
-	 *                O fator de conversão.
+	 *            O fator de conversão.
 	 */
 	public void setFatorDeConversao(FatorDeConversao fatorDeConversao) {
 		this.fatorDeConversao = fatorDeConversao;
@@ -146,6 +147,4 @@ public class Extracao {
 				.append("time", time).toString();
 	}
 
-
-    
 }

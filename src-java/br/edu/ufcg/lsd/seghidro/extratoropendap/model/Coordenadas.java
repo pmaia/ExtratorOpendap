@@ -80,12 +80,13 @@ public class Coordenadas {
 	 * @param time
 	 *            A data que permite localizar temporalmente a coordenada.
 	 */
-	public Coordenadas(double latitude, double longitude, double altitude, Date time) {
-	    super();
-	    this.latitude = latitude;
-	    this.longitude = longitude;
-	    this.altitude = altitude;
-	    this.time = time;
+	public Coordenadas(double latitude, double longitude, double altitude,
+			Date time) {
+		super();
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.altitude = altitude;
+		this.time = time;
 	}
 
 	public double getLatitude() {
@@ -113,17 +114,18 @@ public class Coordenadas {
 	}
 
 	public double getAltitude() {
-	    return altitude;
+		return altitude;
 	}
 
 	public void setAltitude(double altitude) {
-	    this.altitude = altitude;
+		this.altitude = altitude;
 	}
 
 	@Override
 	public String toString() {
-	    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("latitude", latitude).append("longitude", longitude).append("altitude",
-	    	altitude).append("time", time).toString();
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+				.append("latitude", latitude).append("longitude", longitude)
+				.append("altitude", altitude).append("time", time).toString();
 	}
-	
+
 }

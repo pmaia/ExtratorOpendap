@@ -21,26 +21,26 @@ import br.edu.ufcg.lsd.seghidro.extratoropendap.model.Extracao;
 
 public interface FormatadorIF {
 
-    /**
-     * Realiza a adição dos valores extraídos. O objetivo deste método é
-     * formatar a saída dos resultados extraídos.
-     * 
-     * @param longitude
-     *                A longitude da localidade para a qual foi extraído o valor
-     *                para a variável de interesse.
-     * @param latitude
-     *                A latitude da localidade para a qual foi extraído o valor
-     *                para a variável de interesse.
-     * @param timeDate
-     *                A data representa a localização temporal do valor de
-     *                interesse.
-     * @param valor
-     *                O valor extraído.
-     */
-    public void adicionaExtracao(Coordenadas coordenadas, double valor);
+	/**
+	 * Realiza a adição dos valores extraídos. O objetivo deste método é
+	 * formatar a saída dos resultados extraídos.
+	 * 
+	 * @param longitude
+	 *            A longitude da localidade para a qual foi extraído o valor
+	 *            para a variável de interesse.
+	 * @param latitude
+	 *            A latitude da localidade para a qual foi extraído o valor para
+	 *            a variável de interesse.
+	 * @param timeDate
+	 *            A data representa a localização temporal do valor de
+	 *            interesse.
+	 * @param valor
+	 *            O valor extraído.
+	 */
+	public void adicionaExtracao(Coordenadas coordenadas, double valor);
 
-    public void adicionaExtracao(Extracao extracao);
-    
-    public void setStringBuffer(StringBuffer sb);
+	public void adicionaExtracao(Extracao extracao);
+
+	public void setStringBuffer(StringBuffer sb);
 
 }

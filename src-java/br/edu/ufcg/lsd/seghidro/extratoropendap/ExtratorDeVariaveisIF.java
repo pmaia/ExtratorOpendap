@@ -26,48 +26,53 @@ import br.edu.ufcg.lsd.seghidro.extratoropendap.model.FatorDeConversao;
 
 public interface ExtratorDeVariaveisIF {
 
-    /**
-     * Recupera as anomalias extraídas em um formato textual. Dentro do padrão SegHidro, trata-se de um formato PMH-like, com as
-     * localizações espacial e temporal dos valores extraídos. Um exemplo do formato de saída é:
-     * <pre>
-     *            -36.9631             -7.5069       0 2055-01-16 00:00:00         -3.2 -
-     *            -36.9631             -7.5069       0 2055-02-16 00:00:00          0.0 -
-     *            -36.9631             -7.5069       0 2055-03-16 00:00:00          0.8 -
-     *            -36.9631             -7.5069       0 2055-04-16 00:00:00          1.6 -
-     *            -36.9631             -7.5069       0 2055-05-16 00:00:00          1.1 -
-     *            -36.9631             -7.5069       0 2055-06-16 00:00:00          0.2 -
-     *            -36.9631             -7.5069       0 2055-07-16 00:00:00          0.2 -
-     *            -36.9631             -7.5069       0 2055-08-16 00:00:00          0.0 -
-     *            -36.9631             -7.5069       0 2055-09-16 00:00:00          0.1 -
-     *            -36.9631             -7.5069       0 2055-10-16 00:00:00          0.0 -
-     *            -36.9631             -7.5069       0 2055-11-16 00:00:00          0.0 -
-     *            -36.9631             -7.5069       0 2055-12-16 00:00:00          0.0 -
-     * </pre>
-     * @return A representação das extrações em um formato textual. 
-     */
-    public String getExtracoes();
+	/**
+	 * Recupera as anomalias extraídas em um formato textual. Dentro do padrão
+	 * SegHidro, trata-se de um formato PMH-like, com as localizações espacial e
+	 * temporal dos valores extraídos. Um exemplo do formato de saída é:
+	 * 
+	 * <pre>
+	 *            -36.9631             -7.5069       0 2055-01-16 00:00:00         -3.2 -
+	 *            -36.9631             -7.5069       0 2055-02-16 00:00:00          0.0 -
+	 *            -36.9631             -7.5069       0 2055-03-16 00:00:00          0.8 -
+	 *            -36.9631             -7.5069       0 2055-04-16 00:00:00          1.6 -
+	 *            -36.9631             -7.5069       0 2055-05-16 00:00:00          1.1 -
+	 *            -36.9631             -7.5069       0 2055-06-16 00:00:00          0.2 -
+	 *            -36.9631             -7.5069       0 2055-07-16 00:00:00          0.2 -
+	 *            -36.9631             -7.5069       0 2055-08-16 00:00:00          0.0 -
+	 *            -36.9631             -7.5069       0 2055-09-16 00:00:00          0.1 -
+	 *            -36.9631             -7.5069       0 2055-10-16 00:00:00          0.0 -
+	 *            -36.9631             -7.5069       0 2055-11-16 00:00:00          0.0 -
+	 *            -36.9631             -7.5069       0 2055-12-16 00:00:00          0.0 -
+	 * </pre>
+	 * 
+	 * @return A representação das extrações em um formato textual.
+	 */
+	public String getExtracoes();
 
-    public void setDataFinal(Date dataFinal);
+	public void setDataFinal(Date dataFinal);
 
-    public void setDataInicial(Date dataInicial);
+	public void setDataInicial(Date dataInicial);
 
-    public void setFatorDeConversao(FatorDeConversao fatorDeConversao);
+	public void setFatorDeConversao(FatorDeConversao fatorDeConversao);
 
-    public boolean salvaArquivoComExtracoes();
+	public boolean salvaArquivoComExtracoes();
 
-    /**
-     * Realiza a extração das anomalias a partir do arquivo netCDF informado na criação deste construtor. 
-     * Este é o método base para este extrator, devendo ser o primeiro chamado caso o objetivo seja acessar algum valor 
-     * referente às anomalias extraídas.
-     * @return As anomalias já no formato textual padronizado.
-     * @throws ExtratorOpendapException 
-     */
-    public String extraiValoresDeInteresse() throws ExtratorOpendapException;
+	/**
+	 * Realiza a extração das anomalias a partir do arquivo netCDF informado na
+	 * criação deste construtor. Este é o método base para este extrator,
+	 * devendo ser o primeiro chamado caso o objetivo seja acessar algum valor
+	 * referente às anomalias extraídas.
+	 * 
+	 * @return As anomalias já no formato textual padronizado.
+	 * @throws ExtratorOpendapException
+	 */
+	public String extraiValoresDeInteresse() throws ExtratorOpendapException;
 
-    public void setFormatador(FormatadorIF formatador);
+	public void setFormatador(FormatadorIF formatador);
 
-    String getUnidadeAposExtracao();
-    
-    public List<Extracao> getListaDeExtracoes();
+	String getUnidadeAposExtracao();
+
+	public List<Extracao> getListaDeExtracoes();
 
 }

@@ -30,14 +30,14 @@ import br.edu.ufcg.lsd.seghidro.extratoropendap.model.Extracao;
 
 public abstract class FormatadorAbstract implements FormatadorIF {
 
-    private static Logger logger = Logger.getLogger(FormatadorAbstract.class);
+	private static Logger logger = Logger.getLogger(FormatadorAbstract.class);
 
 	protected Formatter formatter;
 
 	public FormatadorAbstract() {
 		formatadorDeNumeros.applyPattern("#,##0.0");
 	}
-	
+
 	public FormatadorAbstract(StringBuffer sb) {
 		this();
 		formatter = new Formatter(sb, Locale.US);
@@ -48,8 +48,9 @@ public abstract class FormatadorAbstract implements FormatadorIF {
 		formatter = new Formatter(sb, Locale.US);
 	}
 
-    public void adicionaExtracao(Extracao extracao) {
-    	adicionaExtracao(extracao.getCoordenadas(),extracao.getValorConvertido());	
-    }
-	
+	public void adicionaExtracao(Extracao extracao) {
+		adicionaExtracao(extracao.getCoordenadas(),
+				extracao.getValorConvertido());
+	}
+
 }
