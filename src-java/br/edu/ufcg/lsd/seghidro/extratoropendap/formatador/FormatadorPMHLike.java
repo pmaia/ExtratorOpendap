@@ -38,9 +38,9 @@ public class FormatadorPMHLike extends FormatadorAbstract {
 
 	public void adicionaExtracao(Coordenadas coordenadas, double valor) {
 		String dataFormatada = formatadorDeDatas.format(coordenadas.getTime());
-		formatter.format("%19.4f %19.4f       %S %18.12f" + FIM_DE_LINHA,
-				coordenadas.getLongitude(), coordenadas.getLatitude(),
-				dataFormatada, valor);
+		formatter.format("%19.4f\t%19.4f\t%19.4f\t%S\t%18.12f" + FIM_DE_LINHA,
+				coordenadas.getLongitude(), coordenadas.getLatitude(), 
+				coordenadas.getNivelPressaoAtmosferica(), dataFormatada, valor);
 	}
 
 }

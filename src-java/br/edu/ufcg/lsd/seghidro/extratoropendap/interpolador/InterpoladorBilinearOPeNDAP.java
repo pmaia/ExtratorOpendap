@@ -8,6 +8,7 @@ import ucar.ma2.Array;
 import ucar.ma2.IndexIterator;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.dataset.CoordinateAxis;
+import ucar.nc2.dataset.CoordinateAxis1D;
 import ucar.nc2.dataset.VariableEnhanced;
 import ucar.nc2.dt.GridCoordSystem;
 import ucar.nc2.dt.grid.GeoGrid;
@@ -69,6 +70,11 @@ public class InterpoladorBilinearOPeNDAP implements InterpoladorIF {
 			GridCoordSystem coordinateSystem = grid.getCoordinateSystem();
 			CoordinateAxis longitudeVariable = coordinateSystem.getXHorizAxis();
 			CoordinateAxis latitudeVariable = coordinateSystem.getYHorizAxis();
+			CoordinateAxis1D pressureLevelVariable = coordinateSystem.getVerticalAxis();
+			
+			// recuperando o indice da coordenada de pressao atmosferica
+			int pressureLevelIndex = 
+				pressureLevelVariable.findCoordElement(coordenadas.getNivelPressaoAtmosferica());
 
 			// localiza, na grade, os índices mais próximos dos valores de
 			// latitude e longitude informados.
@@ -150,14 +156,14 @@ public class InterpoladorBilinearOPeNDAP implements InterpoladorIF {
 				f22 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, y2,
 						x2 }, unicoElemento);
 			} else if (grid.getRank() == 4) {
-				f11 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, 0,
-						y1, x1 }, unicoElemento);
-				f12 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, 0,
-						y2, x1 }, unicoElemento);
-				f21 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, 0,
-						y1, x2 }, unicoElemento);
-				f22 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, 0,
-						y2, x2 }, unicoElemento);
+				f11 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, 
+						pressureLevelIndex, y1, x1 }, unicoElemento);
+				f12 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, 
+						pressureLevelIndex, y2, x1 }, unicoElemento);
+				f21 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, 
+						pressureLevelIndex, y1, x2 }, unicoElemento);
+				f22 = NetcdfAPIUtil.readAsFloat(variable, new int[] { time, 
+						pressureLevelIndex, y2, x2 }, unicoElemento);
 			} else {
 				logger.error("Não pôde efetuar a leitura do DataSet. Dimensão '"
 						+ grid.getRank() + "' não esperada.");

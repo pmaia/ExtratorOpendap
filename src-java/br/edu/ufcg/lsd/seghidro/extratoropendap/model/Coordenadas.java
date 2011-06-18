@@ -1,6 +1,7 @@
 package br.edu.ufcg.lsd.seghidro.extratoropendap.model;
 
 import java.util.Date;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -27,7 +28,7 @@ public class Coordenadas {
 	/**
 	 * O valor referente à altitude da coordenada.
 	 */
-	private double altitude;
+	private double nivelPressaoAtmosferica;
 
 	/**
 	 * A data que permite localizar temporalmente a coordenada.
@@ -47,6 +48,23 @@ public class Coordenadas {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.time = null;
+	}
+	
+	/**
+	 * Construtor para uma coordenada que desconsidera localização temporal.
+	 * 
+	 * @param latitude
+	 * 		A latitude da coordenada
+	 * @param longitude
+	 * 		A longitude da coordenada
+	 * @param nivelPressaoAtmosferica
+	 * 		Nível de pressão atmosférica da coordenada. Representa uma altitude.
+	 * 		
+	 */
+	public Coordenadas(double latitude, double longitude, double nivelPressaoAtmosferica) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.nivelPressaoAtmosferica = nivelPressaoAtmosferica;
 	}
 
 	/**
@@ -85,7 +103,7 @@ public class Coordenadas {
 		super();
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.altitude = altitude;
+		this.nivelPressaoAtmosferica = altitude;
 		this.time = time;
 	}
 
@@ -113,19 +131,19 @@ public class Coordenadas {
 		this.time = time;
 	}
 
-	public double getAltitude() {
-		return altitude;
+	public double getNivelPressaoAtmosferica() {
+		return nivelPressaoAtmosferica;
 	}
 
-	public void setAltitude(double altitude) {
-		this.altitude = altitude;
+	public void setNivelPressaoAtmosferica(double nivelPressaoAtmosferica) {
+		this.nivelPressaoAtmosferica = nivelPressaoAtmosferica;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
 				.append("latitude", latitude).append("longitude", longitude)
-				.append("altitude", altitude).append("time", time).toString();
+				.append("nivel de pressao atmosferica", nivelPressaoAtmosferica).append("time", time).toString();
 	}
 
 }

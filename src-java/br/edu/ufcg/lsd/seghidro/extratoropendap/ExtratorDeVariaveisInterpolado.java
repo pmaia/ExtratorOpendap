@@ -6,21 +6,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
 import br.edu.ufcg.lsd.seghidro.extratoropendap.exceptions.ExtratorOpendapException;
-import br.edu.ufcg.lsd.seghidro.extratoropendap.formatador.FormatadorIF;
-import br.edu.ufcg.lsd.seghidro.extratoropendap.formatador.FormatadorPMHLike;
 import br.edu.ufcg.lsd.seghidro.extratoropendap.interpolador.InterpoladorBilinearOPeNDAP;
 import br.edu.ufcg.lsd.seghidro.extratoropendap.interpolador.InterpoladorIF;
 import br.edu.ufcg.lsd.seghidro.extratoropendap.model.Coordenadas;
 import br.edu.ufcg.lsd.seghidro.extratoropendap.model.DataSet;
 import br.edu.ufcg.lsd.seghidro.extratoropendap.model.Extracao;
-import br.edu.ufcg.lsd.seghidro.extratoropendap.model.FatorDeConversao;
 import br.edu.ufcg.lsd.seghidro.extratoropendap.model.Posto;
 
 /**
@@ -156,7 +152,7 @@ public class ExtratorDeVariaveisInterpolado extends ExtratorDeVariaveisAbstract 
 					+ variavelDeInteresse + "'.");
 		}
 	}
-
+	
 	public ExtratorDeVariaveisInterpolado(DataSet dataSet,
 			File arquivoDePontos, Date dataInicial, Date dataFinal)
 			throws ExtratorOpendapException {
@@ -256,16 +252,20 @@ public class ExtratorDeVariaveisInterpolado extends ExtratorDeVariaveisAbstract 
 		Scanner sc = (scPontos != null) ? scPontos
 				: new Scanner(streamDePontos);
 		while (sc.hasNextLine()) {
-			Scanner sc2 = new Scanner(sc.nextLine());
-			// TODO verificar o caso para o qual o arquivo de pontos não está
-			// devidamente definido.
-			double longitude = new Double(sc2.next());
-			double latitude = new Double(sc2.next());
-			// String nomePosto = sc2.next();
-			Coordenadas coordenadas = new Coordenadas(latitude, longitude);
-			logger.debug("Vai realizar a extração para a coordenada: "
-					+ coordenadas);
-			extraiValoresDeInteresse(coordenadas);
+			String line = sc.nextLine().trim();
+			if(!line.startsWith("#")) {
+				Scanner sc2 = new Scanner(line);
+				// TODO verificar o caso para o qual o arquivo de pontos não está
+				// devidamente definido.
+				double longitude = new Double(sc2.next());
+				double latitude = new Double(sc2.next());
+				double pressureLevel = new Double(sc2.next());
+				// String nomePosto = sc2.next();
+				Coordenadas coordenadas = new Coordenadas(latitude, longitude, pressureLevel);
+				logger.debug("Vai realizar a extração para a coordenada: "
+						+ coordenadas);
+				extraiValoresDeInteresse(coordenadas);
+			}
 		}
 		return this.getExtracoes();
 	}
